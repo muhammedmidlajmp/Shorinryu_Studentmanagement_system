@@ -16,7 +16,7 @@ class OptionTextField extends StatelessWidget {
               width: double.infinity,
               height: 55,
               decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 232, 230, 230),
+                  color: Colors.white30,
                   borderRadius: BorderRadius.circular(20)),
               child: SingleChildScrollView(
                 child: Column(
@@ -41,6 +41,7 @@ class OptionTextField extends StatelessWidget {
                         value.setSelectedOptionGender(newValue!);
                       },
                       decoration: const InputDecoration(
+                        contentPadding: EdgeInsets.only(left: 25),
                         labelText: 'Select Gender',
                         border: OutlineInputBorder(),
                       ),
@@ -57,7 +58,7 @@ class OptionTextField extends StatelessWidget {
                             return null;
                           }
                         },
-                        borderRadius: BorderRadius.circular(20),
+                        borderRadius: BorderRadius.circular(30),
                         value: value.selectedOption,
                         items: value.options.map((String value) {
                           return DropdownMenuItem<String>(

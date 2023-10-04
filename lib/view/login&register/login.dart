@@ -19,7 +19,7 @@ class LoginPage extends StatelessWidget {
       builder: (context, orientation, deviceType) => Scaffold(
         backgroundColor: const Color.fromARGB(255, 231, 241, 250),
         body: Consumer<LoginProvier>(
-          builder: (context, LoginProModel, child) => Container(
+          builder: (context, loginProModel, child) => Container(
             decoration: const BoxDecoration(),
             child: Stack(
               children: [
@@ -41,7 +41,7 @@ class LoginPage extends StatelessWidget {
                     ),
                     child: SingleChildScrollView(
                       child: Form(
-                        key: LoginProModel.loginKey,
+                        key: loginProModel.loginKey,
                         child: Column(
                           children: <Widget>[
                             const Padding(
@@ -58,9 +58,9 @@ class LoginPage extends StatelessWidget {
                               padding: const EdgeInsets.all(20.0),
                               child: TextFormField(
                                   controller:
-                                      LoginProModel.loginEmailController,
+                                      loginProModel.loginEmailController,
                                   decoration: InputDecoration(
-                                    contentPadding: EdgeInsets.only(left: 25),
+                                    contentPadding:const EdgeInsets.only(left: 25),
                                     filled: true,
                                     fillColor: Colors.white30,
                                     hintText: 'Email',
@@ -85,7 +85,7 @@ class LoginPage extends StatelessWidget {
                               child: TextFormField(
                                 obscureText: true,
                                 controller:
-                                    LoginProModel.loginPasswordController,
+                                    loginProModel.loginPasswordController,
                                 decoration: InputDecoration(
                                   contentPadding:
                                       const EdgeInsets.only(left: 25),
@@ -127,18 +127,15 @@ class LoginPage extends StatelessWidget {
                               ],
                             ),
                             ElevatedButton(
-                              onPressed: LoginProModel.isLoading
+                              onPressed: loginProModel.isLoading
                                   ? null // Disable the button while loading
                                   : () async {
-                                      // Provider.of<ChatWebsocketProvider>(context,
-                                      //         listen: false)
-                                      //     .chatWebInitiolizer();
                                       final SharedPreferences prefs =
                                           await SharedPreferences.getInstance();
-                                      if (LoginProModel.loginKey.currentState!
+                                      if (loginProModel.loginKey.currentState!
                                           .validate()) {
                                         // ignore: use_build_context_synchronously
-                                        await LoginProModel.loginSubmitForm(
+                                        await loginProModel.loginSubmitForm(
                                             context);
 
                                         if (prefs.getBool('isUserLogined') ==

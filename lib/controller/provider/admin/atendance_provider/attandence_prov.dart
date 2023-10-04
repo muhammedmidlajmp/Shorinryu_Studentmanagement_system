@@ -19,7 +19,7 @@ class AttandenceState extends ChangeNotifier {
 
   // Pass the user provider instance to the constructor
   AttandenceState(UserGetProvider userProvider) {
-    final numberOfUsers = userProvider.users.length;
+    // final numberOfUsers = userProvider.users.length;
     _users = List.generate(100000, (_) => CheckboxState());
   }
 
@@ -63,15 +63,14 @@ class AttandenceState extends ChangeNotifier {
 
       if (response.statusCode == 200) {
         prfrc.setBool('isAttantanceMark', true);
-        print('Attendance data posted successfully');
       } else {
-        print(
-            'Failed to post attendance data - Status Code: ${response.statusCode}');
+        prfrc.setBool('isAttantanceMark', false);
       }
     } catch (error) {
+        prfrc.setBool('isAttantanceMark', false);
+
       getNewAccessKey();
       postAttendanceData(attendanceDataList);
-      print('Error while posting attendance data: $error');
     }
   }
 }

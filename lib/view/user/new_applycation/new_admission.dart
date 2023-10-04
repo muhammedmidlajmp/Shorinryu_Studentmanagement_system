@@ -20,6 +20,7 @@ class NewAdmissionScreen extends StatelessWidget {
       builder: (context, orientation, deviceType) {
         return Consumer<RegisterDetailsForm>(
           builder: (context, admissionModelPro, child) => Scaffold(
+              backgroundColor: const Color.fromARGB(255, 231, 241, 250),
               appBar: AppBar(
                 centerTitle: true,
                 leading: IconButton(
@@ -36,113 +37,102 @@ class NewAdmissionScreen extends StatelessWidget {
                   style: TextStyle(color: Colors.yellowAccent),
                 ),
               ),
-              body: Container(
-                decoration: const BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage(
-                            'asset/img/karate-graduation-blackbelt-martial-arts.jpg'),
-                        fit: BoxFit.cover),
-                    gradient: LinearGradient(
-                      colors: [Colors.white, Colors.white38, Colors.white],
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                    )),
-                child: ListView(
-                  children: [
-                    Form(
-                      key: formKey,
-                      child: Column(
-                        children: [
-                          admissionModelPro.fileImage == null
-                              ? CircleAvatar(
-                                  radius: screenHight * 0.10,
-                                  backgroundImage:
-                                      const AssetImage('asset/img/PROFILE.png'),
-                                )
-                              : CircleAvatar(
-                                  backgroundImage: FileImage(
-                                    File(
-                                      admissionModelPro.fileImage!.path,
-                                    ),
+              body: ListView(
+                children: [
+                  Form(
+                    key: formKey,
+                    child: Column(
+                      children: [
+                        admissionModelPro.fileImage == null
+                            ? CircleAvatar(
+                                radius: screenHight * 0.10,
+                                backgroundImage:
+                                    const AssetImage('asset/img/PROFILE.png'),
+                              )
+                            : CircleAvatar(
+                                backgroundImage: FileImage(
+                                  File(
+                                    admissionModelPro.fileImage!.path,
                                   ),
-                                  radius: screenHight / 10,
                                 ),
-                          Padding(
-                            padding: EdgeInsets.only(
-                                left: screenWidth * 0.25,
-                                right: screenWidth * 0.25),
-                            child: ElevatedButton(
-                              style: const ButtonStyle(
-                                  backgroundColor:
-                                      MaterialStatePropertyAll(Colors.grey)),
-                              onPressed: () {
-                                admissionModelPro.getPhoto();
-                              },
-                              child: const Text('Select Image'),
-                            ),
+                                radius: screenHight / 10,
+                              ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              left: screenWidth * 0.25,
+                              right: screenWidth * 0.25),
+                          child: ElevatedButton(
+                            style: const ButtonStyle(
+                                backgroundColor:
+                                    MaterialStatePropertyAll(Colors.grey)),
+                            onPressed: () {
+                              admissionModelPro.getPhoto();
+                            },
+                            child: const Text('Select Image'),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              height: screenHight * 0.5,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: Colors.black38),
-                              child: const TextFormFieldFormUpdate(),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            height: screenHight * 0.5,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: const Color.fromARGB(255, 188, 209, 225),
                             ),
+                            child: const TextFormFieldFormUpdate(),
                           ),
-                          Padding(
-                            padding: EdgeInsets.only(
-                                left: screenWidth * 0.25,
-                                right: screenWidth * 0.25),
-                            child: ElevatedButton(
-                              style: const ButtonStyle(
-                                  backgroundColor:
-                                      MaterialStatePropertyAll(Colors.red)),
-                              onPressed: () async {
-                                SharedPreferences prefs =
-                                    await SharedPreferences.getInstance();
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              left: screenWidth * 0.25,
+                              right: screenWidth * 0.25),
+                          child: ElevatedButton(
+                            style: const ButtonStyle(
+                                backgroundColor:
+                                    MaterialStatePropertyAll(Colors.red)),
+                            onPressed: () async {
+                              SharedPreferences prefs =
+                                  await SharedPreferences.getInstance();
 
-                                if (formKey.currentState!.validate()) {
+                              if (formKey.currentState!.validate()) {
+                                // ignore: use_build_context_synchronously
+                                await admissionModelPro
+                                    .updateFormRegister(context);
+                                if (prefs.getBool('isformFilled') == true) {
                                   // ignore: use_build_context_synchronously
-                                  await admissionModelPro
-                                      .updateFormRegister(context);
-                                  if (prefs.getBool('isformFilled') == true) {
-                                    // ignore: use_build_context_synchronously
-                                    Navigator.pop(context);
+                                  Navigator.pop(context);
 
-                                    // ignore: use_build_context_synchronously
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                    const  SnackBar(
-                                        content: Text('Success'),
-                                        backgroundColor: Colors.green,
-                                      ),
-                                    );
-                                  } else {
-                                    // ignore: use_build_context_synchronously
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                    const  SnackBar(
-                                        content:
-                                            Text('Faild: Check The Details '),
-                                        backgroundColor: Colors.red,
-                                      ),
-                                    );
-                                  }
+                                  // ignore: use_build_context_synchronously
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text('Success'),
+                                      backgroundColor: Colors.green,
+                                    ),
+                                  );
+                                } else {
+                                  // ignore: use_build_context_synchronously
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content:
+                                          Text('Faild: Check The Details '),
+                                      backgroundColor: Colors.red,
+                                    ),
+                                  );
                                 }
-                                // await admissionModelPro.clearFormData();
-                              },
-                              child: const SizedBox(
-                                  width: 150,
-                                  height: 35,
-                                  child: Center(
-                                      child: Text('        Submit        '))),
-                            ),
+                              }
+                              // await admissionModelPro.clearFormData();
+                            },
+                            child: const SizedBox(
+                                width: 150,
+                                height: 35,
+                                child: Center(
+                                    child: Text('        Submit        '))),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               )),
         );
       },
