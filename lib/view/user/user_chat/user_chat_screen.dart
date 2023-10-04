@@ -1,56 +1,72 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-// import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:shorinryu/controller/provider/admin/chat_provider/chat_provider.dart';
-import 'package:shorinryu/controller/provider/chat_wbsocket_provider/chat_websocket_privider.dart';
 import 'package:shorinryu/model/chat_model/chat_model.dart';
+import 'package:shorinryu/model/chat_websocket_model/chat_websocket_model.dart';
+import 'package:shorinryu/model/users_get_model/users_get_model.dart';
+import '../../../controller/provider/chat_wbsocket_provider/chat_websocket_privider.dart';
 
 class UserChatScreen extends StatelessWidget {
-  final String userId;
-
-  const UserChatScreen({Key? key, required this.userId}) : super(key: key);
+  final int id;
+  final int reciever = 1;
+  const UserChatScreen({Key? key, required this.id}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Chat '),
+        title: Text('Chat'),
       ),
       body: Column(
         children: [
           Expanded(
             child: Consumer<MessageProvider>(
               builder: (context, messageProvider, _) {
-                final messages =
-                    messageProvider.chatmessagess.reversed.toList();
+                // final messages =
+                //     messageProvider.chatmessagess.reversed.toList();
 
                 // Filter messages based on receiver ID
-                final receiverMessages = messages
-                    // ignore: unrelated_type_equality_checks
-                    .where((message) => message.receiver == "1")
-                    .toList();
+                // final receiverMessages = messages
+                //     .where((message) => message.receiver == reciever)
+                //     .toList();
 
-                return ListView.builder(
-                  itemCount: receiverMessages.length,
-                  reverse: true,
-                  itemBuilder: (context, index) {
-                    final message = receiverMessages[index];
+                return StreamBuilder<MessageWeb>(
+                  stream: messageStreamController.stream,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      // While waiting for data, you can display a loading indicator.
+                      return Center(child: CircularProgressIndicator());
+                    } else if (snapshot.hasError) {
+                      // If there's an error in the stream, you can display an error message.
+                      return Text('Error: ${snapshot.error}');
+                    } else if (!snapshot.hasData) {
+                      // If there's no data or the message list is empty, you can display a placeholder or an empty message.
+                      return Text('No messages yet');
+                    } else {
+                      final message = snapshot.data!;
+                      // Check if the message is sent by the current user (replace 'currentUserId' with the actual user ID)
+                      final isMyMessage = message.sender.id == 'currentUserId';
 
-                    // Check if the message is sent by the current user
-                    // ignore: unrelated_type_equality_checks
-                    final isMyMessage = message.sender == userId;
-
-                    return MessageWidget(
-                      message: message,
-                      isMyMessage: isMyMessage,
-                    );
+                      return ListView.builder(
+                        itemCount:
+                            1, // You need to specify the number of items in the list
+                        reverse: true,
+                        itemBuilder: (context, index) {
+                          // Pass the message and isMyMessage to the MessageWidget
+                          return MessageWidget(
+                            message: message,
+                            isMyMessage: isMyMessage,
+                          );
+                        },
+                      );
+                    }
                   },
                 );
               },
             ),
           ),
-          const _ChatInputField(receiverId: '1'),
+          _ChatInputField(receiverId: reciever.toString()),
         ],
       ),
     );
@@ -77,7 +93,7 @@ class _ChatInputFieldState extends State<_ChatInputField> {
         children: [
           Expanded(
             child: TextField(
-              controller: messageProvider.userChattextEditingController,
+              controller: messageProvider.chattextEditingController,
               decoration: const InputDecoration(
                 hintText: 'Type your message...',
               ),
@@ -87,16 +103,14 @@ class _ChatInputFieldState extends State<_ChatInputField> {
             icon: const Icon(Icons.send),
             onPressed: () async {
               final text =
-                  messageProvider.userChattextEditingController.text.trim();
+                  messageProvider.chattextEditingController.text.trim();
               if (text.isNotEmpty) {
-                // await messageProvider.postData(widget.receiverId);
-
-                messageProvider.fetchNotification();
+                messageProvider.chattextEditingController.clear();
+                // messageProvider.fetchNotification();
                 channel.sink.add(jsonEncode({
                   "type": "message",
-                  "message": {"text": text, "receiver_id": '1'}
+                  "message": {"text": text, "receiver_id": widget.receiverId}
                 }));
-                messageProvider.userChattextEditingController.clear();
               }
             },
           ),
@@ -107,7 +121,7 @@ class _ChatInputFieldState extends State<_ChatInputField> {
 }
 
 class MessageWidget extends StatelessWidget {
-  final MessageChat message;
+  final MessageWeb message;
   final bool isMyMessage;
 
   const MessageWidget(
@@ -116,7 +130,7 @@ class MessageWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final alignment =
-        isMyMessage ? Alignment.centerLeft : Alignment.centerRight;
+        isMyMessage ? Alignment.centerRight : Alignment.centerLeft;
 
     return Container(
       alignment: alignment,

@@ -19,46 +19,61 @@ class AttandanceGetProvider extends ChangeNotifier {
   int presentCount = 0;
   int absentCount = 0;
 
-  Future<void> fetchAttandence(String startDate, String endDate) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final accessKey = prefs.getString('accessKey');
+  Future<void> fetchAttendance(String startDate, String endDate) async {
+    try {
+      // Check if startDate or endDate is null before proceeding
+      if (startDate == null || endDate == null) {
+        throw Exception('Start date or end date is null');
+      }
 
-    final Map<String, dynamic> requestData = {
-      'start_date': startDate,
-      'end_date': endDate,
-    };
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      final accessKey = prefs.getString('accessKey');
 
-    final Uri uri = Uri.parse('$baseUrl/user/attendance/filter/')
-        .replace(queryParameters: requestData);
+      if (accessKey == null) {
+        throw Exception('Access key not found');
+      }
 
-    final response = await http.get(
-      uri,
-      headers: {
-        'Authorization': 'Bearer $accessKey',
-        'Content-Type': 'application/json',
-      },
-    );
+      final Map<String, dynamic> requestData = {
+        'start_date': startDate,
+        'end_date': endDate,
+      };
 
-    if (response.statusCode == 200) {
-      final List<dynamic> jsonData = json.decode(response.body);
+      final Uri uri = Uri.parse('$baseUrl/user/attendance/filter/')
+          .replace(queryParameters: requestData);
 
-      attendanceRecords.clear();
-      presentCount = 0;
-      absentCount = 0;
+      final response = await http.get(
+        uri,
+        headers: {
+          'Authorization': 'Bearer $accessKey',
+          'Content-Type': 'application/json',
+        },
+      );
 
-      jsonData.forEach((item) {
-        final record = AttendanceRecord.fromJson(item);
-        attendanceRecords.add(record);
-        if (record.isPresent) {
-          presentCount++;
-        } else {
-          absentCount++;
+      if (response.statusCode == 200) {
+        final List<dynamic> jsonData = json.decode(response.body);
+        print(jsonData);
+        attendanceRecords.clear();
+        presentCount = 0;
+        absentCount = 0;
+
+        for (var item in jsonData) {
+          final record = AttendanceRecord.fromJson(item);
+          print('Parsed record: $record');
+          attendanceRecords.add(record);
+          if (record.isPresent) {
+            presentCount++;
+          } else {
+            absentCount++;
+          }
         }
-      });
 
-      notifyListeners();
-    } else {
-      throw Exception('Failed to load attendance records');
+        notifyListeners();
+      } else {
+        throw Exception('Failed to load attendance records');
+      }
+    } catch (e) {
+      // Handle exceptions here, e.g., print an error message or show a dialog.
+      print('Error: $e');
     }
   }
 

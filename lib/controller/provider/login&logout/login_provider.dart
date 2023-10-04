@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:shorinryu/controller/provider/admin/web_socket/web_socket_provider.dart';
+import 'package:shorinryu/controller/provider/admin/web_socket/notification_provider.dart';
 import 'package:shorinryu/model/core/base_url/base_url.dart';
 
 class LoginProvier extends ChangeNotifier {
@@ -49,9 +49,10 @@ class LoginProvier extends ChangeNotifier {
           prefs.setBool("isSuperUserlogInd", true);
           print(userId);
         } else {
+          prefs.setBool('isLogined', true);
           prefs.setBool('isUserLogined', true);
         }
-         print(userId);
+        print(userId);
 
         notifyListeners();
         return true;

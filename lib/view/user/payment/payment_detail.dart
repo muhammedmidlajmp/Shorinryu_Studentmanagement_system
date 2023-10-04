@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:shorinryu/controller/provider/admin/revenue_provider/revenue_provider.dart';
-import 'package:shorinryu/controller/provider/admin/web_socket/web_socket_provider.dart';
+// import 'package:shorinryu/controller/provider/admin/revenue_provider/revenue_provider.dart';
+import 'package:shorinryu/controller/provider/admin/web_socket/notification_provider.dart';
 import 'package:shorinryu/controller/provider/user/user_payment_view/user_payment_provider.dart';
 // import 'package:shorinryu/model/notification_model/notification_get_model.dart';
 import 'package:shorinryu/view/user/payment/payment_screen.dart';
@@ -59,7 +59,7 @@ class UserPaymentViewScreen extends StatelessWidget {
                         child: ListTile(
                           leading: Text(
                             outputDate,
-                            style:const TextStyle(
+                            style: const TextStyle(
                                 fontSize: 15, fontWeight: FontWeight.w700),
                           ),
                           title: Text(request.paymentId),
@@ -79,7 +79,7 @@ class UserPaymentViewScreen extends StatelessWidget {
             ),
             floatingActionButton: FloatingActionButton(
               backgroundColor: Colors.yellowAccent,
-              child:const Icon(
+              child: const Icon(
                 Icons.add,
                 color: Colors.black,
               ),
@@ -87,7 +87,7 @@ class UserPaymentViewScreen extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) =>const PaymentScreen(),
+                      builder: (context) => const PaymentScreen(),
                     ));
               },
             ),

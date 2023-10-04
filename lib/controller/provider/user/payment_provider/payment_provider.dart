@@ -1,8 +1,7 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shorinryu/controller/api/get_new_accesskey.dart';
 import 'package:shorinryu/model/core/base_url/base_url.dart';
 import 'package:http/http.dart' as http;
 
@@ -31,7 +30,7 @@ class PaymentProvider extends ChangeNotifier {
       );
 
       if (response.statusCode == 200) {
-        // Request was successful 
+        // Request was successful
         paymentTextController.clear();
 
         print('POST request successful');
@@ -42,6 +41,9 @@ class PaymentProvider extends ChangeNotifier {
         print('Response data: ${response.body}');
       }
     } catch (e) {
+      getNewAccessKey();
+      postData(paymentID, currentDate);
+
       // An error occurred
       print('Error sending POST request: $e');
     }

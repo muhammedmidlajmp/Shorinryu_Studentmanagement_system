@@ -6,11 +6,26 @@ import 'package:shorinryu/controller/provider/admin/revenue_provider/revenue_pro
 import 'package:shorinryu/model/payment_model/payment_model.dart';
 import 'package:sizer/sizer.dart';
 
-class AdminRevenueScreen extends StatelessWidget {
+class AdminRevenueScreen extends StatefulWidget {
   const AdminRevenueScreen({super.key});
 
   @override
+  State<AdminRevenueScreen> createState() => _AdminRevenueScreenState();
+}
+
+class _AdminRevenueScreenState extends State<AdminRevenueScreen> {
+  var data;
+
+  @override
   Widget build(BuildContext context) {
+    DateTime now = DateTime.now();
+    DateTime currentMonthStart = DateTime(now.year, now.month, 1);
+    DateTime currentDate = DateTime(now.year, now.month, now.day);
+
+// Splitting date and time components
+    String formattedCurrentMonthStart =
+        DateFormat('yyyy-MM-dd').format(currentMonthStart);
+    String formattedCurrentDate = DateFormat('yyyy-MM-dd').format(currentDate);
     // final paymentProv = Provider.of<RevenueProvider>(context, listen: false);
     return Sizer(
       builder: (context, orientation, deviceType) {
@@ -64,15 +79,15 @@ class AdminRevenueScreen extends StatelessWidget {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Icon(
+                                    const Icon(
                                       Icons.attach_money_outlined,
                                       color: Color.fromARGB(255, 0, 255, 8),
                                       size: 45,
                                     ),
                                     FutureBuilder(
-                                        future: modelRevPro.fetchCalculate(
-                                            modelRevPro.fromselectedDate,
-                                            modelRevPro.toselectedDate),
+                                        future: modelRevPro.getUserPayments(
+                                            formattedCurrentMonthStart,
+                                            formattedCurrentDate),
                                         builder: (context, snapshot) {
                                           if (snapshot.connectionState ==
                                               ConnectionState.waiting) {
@@ -184,7 +199,7 @@ class AdminRevenueScreen extends StatelessWidget {
                                   ),
                                   TextButton(
                                       onPressed: () {
-                                        modelRevPro.fetchCalculate(
+                                        modelRevPro.getUserPayments(
                                             modelRevPro.fromselectedDate,
                                             modelRevPro.toselectedDate);
                                       },

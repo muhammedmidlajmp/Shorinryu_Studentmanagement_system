@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:shorinryu/controller/api/get_new_accesskey.dart';
 import 'package:shorinryu/controller/provider/admin/admin_dilog_pro.dart';
 import 'package:shorinryu/controller/provider/admin/revenue_prov/revenue_prov.dart';
 import 'package:shorinryu/controller/provider/admin/revenue_provider/revenue_provider.dart';
@@ -19,9 +20,10 @@ class AdminHomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    getNewAccessKey();
     Provider.of<ChatWebsocketProvider>(context, listen: false)
-        .chatWebInitiolizer();
-    return Sizer( 
+        .chatWebInitializer();
+    return Sizer(
       builder: (context, orientation, deviceType) {
         return Scaffold(
           appBar: AppBar(
@@ -318,7 +320,7 @@ class AdminHomeScreen extends StatelessWidget {
                       Provider.of<RevenueProvider>(context, listen: false)
                           .fetchPayment();
                       Provider.of<AdminRevenueProvider>(context, listen: false)
-                          .fetchCalculate(
+                          .getUserPayments(
                               formattedCurrentMonthStart, formattedCurrentDate);
 
                       Navigator.push(

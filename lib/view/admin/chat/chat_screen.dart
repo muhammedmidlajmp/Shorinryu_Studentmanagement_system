@@ -101,7 +101,7 @@ class _ChatInputFieldState extends State<_ChatInputField> {
                 }));
               }
             },
-          ), 
+          ),
         ],
       ),
     );
@@ -112,7 +112,8 @@ class MessageWidget extends StatelessWidget {
   final MessageChat message;
   final bool isMyMessage;
 
-  const MessageWidget({super.key, required this.message, required this.isMyMessage});
+  const MessageWidget(
+      {super.key, required this.message, required this.isMyMessage});
 
   @override
   Widget build(BuildContext context) {
@@ -121,7 +122,7 @@ class MessageWidget extends StatelessWidget {
 
     return Container(
       alignment: alignment,
-      margin:const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -131,8 +132,8 @@ class MessageWidget extends StatelessWidget {
               borderRadius: BorderRadius.circular(12.0),
             ),
             color: isMyMessage
-                ?const Color.fromARGB(255, 124, 104, 126)
-                :const Color.fromARGB(255, 129, 177, 216),
+                ? const Color.fromARGB(255, 124, 104, 126)
+                : const Color.fromARGB(255, 129, 177, 216),
             child: Padding(
               padding: const EdgeInsets.all(15.0),
               child: Text(

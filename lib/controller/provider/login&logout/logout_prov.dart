@@ -1,3 +1,4 @@
+import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shorinryu/view/login&register/login.dart';
@@ -19,9 +20,10 @@ class LogOutProvider extends ChangeNotifier {
           builder: (context) => const LoginPage(),
         ),
         (route) => false);
-    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-      backgroundColor: Colors.green,
-      content: Text('Log Out Success'),
-    ));
+    CoolAlert.show(
+      context: context,
+      type: CoolAlertType.success,
+      text: "Logout Success",
+    );
   }
 }

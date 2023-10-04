@@ -1,16 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shorinryu/view/login&register/login.dart';
 import 'package:shorinryu/view/user/home_user/home.dart';
 import 'package:sizer/sizer.dart';
 
-class SplashScreen extends StatelessWidget {
+class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    Future.delayed(const Duration(seconds: 3));
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
     _checkLoginStatus(context);
+  }
+
+  @override
+  Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHight = MediaQuery.of(context).size.height;
     return Sizer(
@@ -41,19 +52,7 @@ class SplashScreen extends StatelessWidget {
                   alignment: Alignment.bottomCenter,
                   child: Padding(
                     padding: const EdgeInsets.all(30.0),
-                    child: TextButton(
-                        onPressed: () {
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => LoginPage(),
-                              ));
-                        },
-                        child: const Text(
-                          "Let's Start-->",
-                          style: TextStyle(
-                              color: Colors.yellowAccent, fontSize: 25),
-                        )),
+                    child: Lottie.asset('asset/lottie/animation_lnbq123a.json'),
                   ),
                 ),
               ],
@@ -65,8 +64,9 @@ class SplashScreen extends StatelessWidget {
   }
 
   void _checkLoginStatus(BuildContext context) async {
+    await Future.delayed(const Duration(milliseconds: 4000), () {});
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool isLoggedIn = prefs.getBool('loggind') ?? false;
+    bool isLoggedIn = prefs.getBool('isUserLogined') ?? false;
 
     if (isLoggedIn) {
       // If the user is logged in, navigate to the home page.

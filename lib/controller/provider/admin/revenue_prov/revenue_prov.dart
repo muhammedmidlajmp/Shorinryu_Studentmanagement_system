@@ -57,8 +57,7 @@ class AdminRevenueProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // List<RevenueData> revenueRecord = [];
-  Future<RevenueData> fetchCalculate(String startDate, String endDate) async {
+ Future<RevenueData> getUserPayments(String startDate, String endDate) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final accessKey = prefs.getString('accessKey');
 
@@ -66,24 +65,29 @@ class AdminRevenueProvider extends ChangeNotifier {
       'start_date': startDate,
       'end_date': endDate,
     };
-
     final Uri uri = Uri.parse('$baseUrl/user/payment/calculate_revenue/')
         .replace(queryParameters: requestData);
+    try {
+      final response = await http.get(
+        uri,
+        headers: {
+          'Authorization': 'Bearer $accessKey',
+          'Content-Type': 'application/json',
+        },
+      );
 
-    final response = await http.get(
-      uri,
-      headers: {
-        'Authorization': 'Bearer $accessKey',
-        'Content-Type': 'application/json',
-      },
-    );
+      if (response.statusCode == 200) {
+        final jsonData = json.decode(response.body);
 
-    if (response.statusCode == 200) {
-      final jsonData = json.decode(response.body);
-      notifyListeners();
-      return RevenueData.fromJson(jsonData);
-    } else {
-      throw Exception('Failed to load attendance records');
+        print('Response Body: $jsonData');
+        return RevenueData.fromJson(jsonData);
+      } else {
+        print('Request failed with status: ${response.statusCode}');
+      }
+    } catch (error) {
+      print('Error: $error');
     }
+    return RevenueData(totalRevenue: 0);
   }
+
 }

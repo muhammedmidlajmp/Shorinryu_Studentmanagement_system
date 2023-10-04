@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shorinryu/controller/provider/admin/web_socket/web_socket_provider.dart';
+import 'package:shorinryu/controller/provider/admin/web_socket/notification_provider.dart';
 import 'package:shorinryu/model/notification_model/notification_get_model.dart';
 import 'package:sizer/sizer.dart';
 
@@ -55,9 +55,11 @@ class AnnouncementViewScreen extends StatelessWidget {
 
                         final Message request = announcementList[index];
 
+                        final date = websocketPro.calculateTimeDifference(
+                            DateTime.parse(request.createdAt));
                         return Card(
                           child: ListTile(
-                            leading: Text(""),
+                            leading: Text(date.toString()),
                             title: Text(request.contentMessage.toString()),
                             // subtitle: Text(
                             //     'Start: ${request.start} \n End: ${request.end}'),

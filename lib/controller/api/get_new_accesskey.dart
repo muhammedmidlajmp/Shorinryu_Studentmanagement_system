@@ -6,8 +6,8 @@ import 'package:http/http.dart' as http;
 import 'package:shorinryu/model/core/base_url/base_url.dart';
 import 'package:shorinryu/model/error/error_model.dart';
 
-class GetNewAccessKey {
-  static Future<Either<ErrorModel, String>> getNewAccessKey() async {
+
+   Future<Either<ErrorModel, String>> getNewAccessKey() async {
     try {
       SharedPreferences pref = await SharedPreferences.getInstance();
       String refresh = pref.getString('refreshKey')!;
@@ -26,4 +26,4 @@ class GetNewAccessKey {
       return Left(ErrorModel(e.toString()));
     }
   }
-}
+

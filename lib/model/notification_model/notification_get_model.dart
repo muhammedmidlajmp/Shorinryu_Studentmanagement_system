@@ -4,6 +4,7 @@ class Message {
   bool isSeen;
   int user;
   int content;
+  String createdAt;
 
   Message({
     required this.id,
@@ -11,6 +12,7 @@ class Message {
     required this.isSeen,
     required this.user,
     required this.content,
+    required this.createdAt,
   });
 
   factory Message.fromJson(Map<String, dynamic> json) {
@@ -20,6 +22,7 @@ class Message {
       isSeen: json['is_seen'] as bool,
       user: json['user'] as int,
       content: json['content'] as int,
+      createdAt: json['created_at'] as String,
     );
   }
 
@@ -30,6 +33,7 @@ class Message {
     data['is_seen'] = isSeen;
     data['user'] = user;
     data['content'] = content;
+    data['created_at'] = createdAt;
     return data;
   }
 }

@@ -1,6 +1,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+       
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission
+     android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+     android:maxSdkVersion="18" />
+
     <application
-        android:label="shorinryu"
+        
+        android:label="ShorinRyu"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
@@ -29,5 +36,6 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+            android:name=".FlutterMultiDexApplication" <!-- Specify your custom class here -->
     </application>
 </manifest>

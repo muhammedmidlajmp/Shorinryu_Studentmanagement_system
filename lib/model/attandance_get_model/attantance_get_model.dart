@@ -1,44 +1,44 @@
 class User {
   final int id;
   final String name;
-  final String profilePicture;
-  final String dateOfBirth;
+  final String? profilePicture;
+  final String? dateOfBirth;
   final String email;
-  final String gender;
-  final String guardianName;
-  final int guardianContactNumber;
-  final int number;
-  final bool married;
-  final int alternateNumber;
-  final bool isFormFilled;
-  final dynamic lastPayment;
-  final bool isSuperUser;
-  final String address;
-  final String pincode;
-  final String post;
-  final int aadharNumber;
-  final int age;
+  final String? gender;
+  final String? guardianName;
+  final int? guardianContactNumber;
+  final int? number;
+  final bool? married;
+  final int? alternateNumber;
+  final bool? isFormFilled;
+  final String? lastPayment;
+  final bool? isSuperUser;
+  final String? address;
+  final String? pincode;
+  final String? post;
+  final int? aadharNumber;
+  final int? age;
 
   User({
     required this.id,
     required this.name,
-    required this.profilePicture,
-    required this.dateOfBirth,
+    this.profilePicture,
+    this.dateOfBirth,
     required this.email,
-    required this.gender,
-    required this.guardianName,
-    required this.guardianContactNumber,
-    required this.number,
-    required this.married,
-    required this.alternateNumber,
-    required this.isFormFilled,
-    required this.lastPayment,
-    required this.isSuperUser,
-    required this.address,
-    required this.pincode,
-    required this.post,
-    required this.aadharNumber,
-    required this.age,
+    this.gender,
+    this.guardianName,
+    this.guardianContactNumber,
+    this.number,
+    this.married,
+    this.alternateNumber,
+    this.isFormFilled,
+    this.lastPayment,
+    this.isSuperUser,
+    this.address,
+    this.pincode,
+    this.post,
+    this.aadharNumber,
+    this.age,
   });
 
   factory User.fromJson(Map<String, dynamic> json) {
@@ -88,4 +88,3 @@ class AttendanceRecord {
     );
   }
 }
-

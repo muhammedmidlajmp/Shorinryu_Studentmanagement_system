@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shorinryu/controller/api/get_new_accesskey.dart';
 import 'package:shorinryu/controller/provider/admin/user_get_details/user_details_get_prov.dart';
 import 'package:shorinryu/model/core/base_url/base_url.dart';
 import 'dart:convert';
@@ -19,7 +20,7 @@ class AttandenceState extends ChangeNotifier {
   // Pass the user provider instance to the constructor
   AttandenceState(UserGetProvider userProvider) {
     final numberOfUsers = userProvider.users.length;
-    _users = List.generate(1000, (_) => CheckboxState());
+    _users = List.generate(100000, (_) => CheckboxState());
   }
 
   List<CheckboxState> get users => _users;
@@ -68,6 +69,8 @@ class AttandenceState extends ChangeNotifier {
             'Failed to post attendance data - Status Code: ${response.statusCode}');
       }
     } catch (error) {
+      getNewAccessKey();
+      postAttendanceData(attendanceDataList);
       print('Error while posting attendance data: $error');
     }
   }

@@ -27,11 +27,6 @@ class RegisterProvider extends ChangeNotifier {
 
   final formKey = GlobalKey<FormState>();
 
-  void _setIsLoading(bool value) {
-    _isLoading = value;
-    notifyListeners();
-  }
-
   Future<bool> registerUser(Map<String, dynamic> userData, context) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     // final id = await prefs.getString('userId');
@@ -39,19 +34,18 @@ class RegisterProvider extends ChangeNotifier {
     String apiUrl = '$baseUrl/user/register/';
     // Convert user data to JSON
     final jsonData = json.encode(userData);
+    prefs.setBool('isRegistered', false);
 
     try {
-      _setIsLoading(true);
       // Send POST request to register the user
       final response =
           await http.post(Uri.parse(apiUrl), body: jsonData, headers: {
         'Content-Type': 'application/json',
       });
-      _setIsLoading(false);
 
       if (response.statusCode == 201) {
         prefs.setBool('isRegistered', true);
-        prefs.setBool('loggind', true);
+        // prefs.setBool('loggind', true);
         prefs
             .setString('refreshKey', jsonDecode(response.body)['refresh'])
             .toString();
@@ -68,10 +62,12 @@ class RegisterProvider extends ChangeNotifier {
         notifyListeners();
         return true;
       } else {
+        prefs.setBool('isRegistered', false);
         notifyListeners();
         return false;
       }
     } catch (e) {
+      prefs.setBool('isRegistered', false);
       print('An error occurred: $e');
 
       notifyListeners();
@@ -79,6 +75,3 @@ class RegisterProvider extends ChangeNotifier {
     }
   }
 }
-
-
- 

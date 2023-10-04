@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shorinryu/controller/provider/admin/web_socket/web_socket_provider.dart';
+import 'package:shorinryu/controller/provider/admin/web_socket/notification_provider.dart';
 // import 'package:your_app_path/web_socket_provider.dart'; // Update with your actual import path
 import 'package:sizer/sizer.dart';
 

@@ -6,7 +6,7 @@ import 'package:shorinryu/controller/provider/admin/leave_rqst_get_provdr/leave_
 import 'package:shorinryu/controller/provider/admin/revenue_prov/revenue_prov.dart';
 import 'package:shorinryu/controller/provider/admin/revenue_provider/revenue_provider.dart';
 import 'package:shorinryu/controller/provider/admin/user_get_details/user_details_get_prov.dart';
-import 'package:shorinryu/controller/provider/admin/web_socket/web_socket_provider.dart';
+import 'package:shorinryu/controller/provider/admin/web_socket/notification_provider.dart';
 import 'package:shorinryu/controller/provider/chat_wbsocket_provider/chat_websocket_privider.dart';
 import 'package:shorinryu/controller/provider/login&logout/login_provider.dart';
 import 'package:shorinryu/controller/provider/login&logout/logout_prov.dart';

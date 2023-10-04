@@ -8,58 +8,58 @@ class DrawerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Sizer(
-      builder: (context, orientation, deviceType) => Drawer(
-        width: 70.w,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(60)),
-        child: SafeArea(
-          child: SingleChildScrollView(
-            child: Container(
-              decoration: BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.circular(20)),
-              child: Column(
-                children: [
-                  const CircleAvatar(
-                    radius: 70,
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  const Text('User Name'),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: const Text('    Edit Profile   '),
-                  ),
-                  const Card(
-                    child: ListTile(
-                      leading: Icon(Icons.settings),
-                      title: Text('Settings'),
-                      trailing: Icon(Icons.arrow_forward_ios),
-                    ),
-                  ),
-                  const Card(
-                    child: ListTile(
-                      leading: Icon(Icons.share),
-                      title: Text('Share'),
-                      trailing: Icon(Icons.arrow_forward_ios),
-                    ),
-                  ),
-                  Card(
-                    child: ListTile(
-                      leading: const Icon(Icons.logout_rounded),
-                      title: const Text('Log Out'),
-                      trailing: const Icon(Icons.arrow_forward_ios),
-                      onTap: () {
-                        showLogoutConformContent(context);
-                      },
-                    ),
-                  ),
-                ],
+    return Drawer(
+      width: 70.w,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(60)),
+      child: SafeArea(
+        child: Container(
+          decoration: BoxDecoration(
+              color: Colors.white, borderRadius: BorderRadius.circular(20)),
+          child: Column(
+            // mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // const CircleAvatar(
+              //   radius: 70,
+              // ),
+              // const SizedBox(
+              //   height: 15,
+              // ),
+              // const Text('User Name'),
+              // const SizedBox(
+              //   height: 10,
+              // ),
+              // ElevatedButton(
+              //   onPressed: () {},
+              //   child: const Text('    Edit Profile   '),
+              // ),
+              SizedBox(
+                height: 100,
               ),
-            ),
+              const Card(
+                child: ListTile(
+                  leading: Icon(Icons.settings),
+                  title: Text('Settings'),
+                  trailing: Icon(Icons.arrow_forward_ios),
+                ),
+              ),
+              const Card(
+                child: ListTile(
+                  leading: Icon(Icons.share),
+                  title: Text('Share'),
+                  trailing: Icon(Icons.arrow_forward_ios),
+                ),
+              ),
+              Card(
+                child: ListTile(
+                  leading: const Icon(Icons.logout_rounded),
+                  title: const Text('Log Out'),
+                  trailing: const Icon(Icons.arrow_forward_ios),
+                  onTap: () {
+                    showLogoutConformContent(context);
+                  },
+                ),
+              ),
+            ],
           ),
         ),
       ),

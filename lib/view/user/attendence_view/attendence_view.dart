@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shorinryu/controller/provider/user/attandance_get_provider/attandance_get_provider.dart';
 import 'package:sizer/sizer.dart';
+import 'package:intl/intl.dart';
 
 class AttendenceViewScreen extends StatelessWidget {
   const AttendenceViewScreen({super.key});
@@ -174,9 +175,10 @@ class AttendenceViewScreen extends StatelessWidget {
                             TextFormField(
                               controller:
                                   attandanceProvider.endDateInputController,
-                              decoration:
-                                 const InputDecoration(border: InputBorder.none),
-                              style:const TextStyle(color: Colors.yellowAccent),
+                              decoration: const InputDecoration(
+                                  border: InputBorder.none),
+                              style:
+                                  const TextStyle(color: Colors.yellowAccent),
                               keyboardType: TextInputType.number,
                               onTap: () async {
                                 DateTime? pickedDate = await showDatePicker(
@@ -200,48 +202,58 @@ class AttendenceViewScreen extends StatelessWidget {
                     style: const ButtonStyle(
                         backgroundColor: MaterialStatePropertyAll(Colors.red)),
                     onPressed: () async {
-                      await attandanceProvider.fetchAttandence(
+                      await attandanceProvider.fetchAttendance(
                           attandanceProvider.startdateInputController.text,
                           attandanceProvider.endDateInputController.text);
                     },
-                    child:const Text('Get')),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    width: double.infinity,
-                    height: 62.h,
-                    decoration: BoxDecoration(
+                    child: const Text('Get')),
+                Consumer<AttandanceGetProvider>(
+                    builder: (context, value, child) {
+                  final record = value.attendanceRecords;
+
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      width: double.infinity,
+                      height: 62.h,
+                      decoration: BoxDecoration(
                         color: const Color.fromARGB(185, 0, 0, 0),
-                        borderRadius: BorderRadius.circular(20)),
-                    child: ListView.builder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: ListView.builder(
                         shrinkWrap: true,
-                        itemCount: attandanceProvider.attendanceRecords.length,
+                        itemCount: record.length,
                         itemBuilder: (context, index) {
-                          final record =
-                              attandanceProvider.attendanceRecords[index];
+                          final request = record[index];
+                          DateFormat outputDateFormat =
+                              DateFormat('dd/MMM/yyyy');
+
+                          String outputDate = outputDateFormat
+                              .format(DateTime.parse(request.date));
                           return ListTile(
                             leading: Text(
-                              record
-                                  .date, // Assuming date is a property in your AttendanceRecord
-                              style: TextStyle(
+                              outputDate,
+                              style: const TextStyle(
                                 fontSize: 25,
                                 color: Colors.yellowAccent,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                             trailing: Text(
-                              record.isPresent ? 'Present' : 'Absent',
+                              request.isPresent ? 'Present' : 'Absent',
                               style: TextStyle(
                                 fontSize: 18,
-                                color: record.isPresent
-                                    ? Color.fromARGB(255, 0, 255, 8)
-                                    : Color.fromARGB(255, 255, 0, 0),
+                                color: request.isPresent
+                                    ? const Color.fromARGB(255, 0, 255, 8)
+                                    : const Color.fromARGB(255, 255, 0, 0),
                               ),
                             ),
                           );
-                        }),
-                  ),
-                )
+                        },
+                      ),
+                    ),
+                  );
+                }),
               ]),
             ),
           ),

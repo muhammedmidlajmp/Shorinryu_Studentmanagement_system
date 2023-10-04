@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shorinryu/controller/provider/admin/chat_provider/chat_provider.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
-import 'package:shorinryu/controller/provider/admin/web_socket/web_socket_provider.dart';
+import 'package:shorinryu/controller/provider/admin/web_socket/notification_provider.dart';
 import 'package:shorinryu/controller/provider/chat_wbsocket_provider/chat_websocket_privider.dart';
 import 'package:shorinryu/controller/provider/user/attandance_get_provider/attandance_get_provider.dart';
 import 'package:shorinryu/controller/provider/user/user_payment_view/user_payment_provider.dart';
@@ -23,8 +23,8 @@ class HomePageUser extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<ChatWebsocketProvider>(context, listen: false)
-        .chatWebInitiolizer();
+    final chat = Provider.of<ChatWebsocketProvider>(context, listen: false);
+    chat.chatWebInitializer();
     final webPro = Provider.of<WebsocketProvider>(context, listen: false);
     return Sizer(
       builder: (context, orientation, deviceType) {
@@ -62,13 +62,8 @@ class HomePageUser extends StatelessWidget {
           ),
           body: Container(
             decoration: const BoxDecoration(
-              image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: AssetImage(
-                    'asset/img/karate-graduation-blackbelt-martial-arts.jpg',
-                  )),
               gradient: LinearGradient(
-                colors: [Color(0xFF07F7F7), Colors.black],
+                colors: [Colors.white, Colors.black],
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
               ),
@@ -124,8 +119,8 @@ class HomePageUser extends StatelessWidget {
                           await SharedPreferences.getInstance();
                       var id = prefs.getString('userId');
                       // ignore: use_build_context_synchronously
-                      Provider.of<MessageProvider>(context, listen: false)
-                          .fetchNotification();
+                      // Provider.of<MessageProvider>(context, listen: false)
+                      //     .fetchNotification();
                       // print(id);
 
                       // ignore: use_build_context_synchronously
@@ -133,7 +128,7 @@ class HomePageUser extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                             builder: (context) =>
-                                UserChatScreen(userId: id.toString()),
+                                UserChatScreen(id: int.parse(id!)),
                           ));
                     },
                     child: Container(
@@ -236,10 +231,7 @@ class HomePageUser extends StatelessWidget {
                       ]),
                     ),
                     onTap: () {
-                    
-
 // Splitting date and time components
-                    
 
                       Provider.of<UserFeesUpdationProvider>(context,
                               listen: false)
@@ -271,7 +263,7 @@ class HomePageUser extends StatelessWidget {
                         // String formattedCurrentTime =
                         //     DateFormat('HH:mm:ss').format(now);
 
-                        value.fetchAttandence(
+                        value.fetchAttendance(
                             formattedCurrentMonthStart, formattedCurrentDate);
 
                         Navigator.push(

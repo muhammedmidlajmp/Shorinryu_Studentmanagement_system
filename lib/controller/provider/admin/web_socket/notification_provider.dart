@@ -16,7 +16,7 @@ class WebsocketProvider extends ChangeNotifier {
   Future<void> initializeWebSocket(String accessKey) async {
     try {
       final uri =
-          Uri.parse('ws://10.4.5.143:8000/ws/notifications/?token=$accessKey');
+          Uri.parse('ws://13.233.11.227/ws/notifications/?token=$accessKey');
       channel = WebSocketChannel.connect(uri);
       // ignore: unused_local_variable
 
@@ -86,7 +86,6 @@ class WebsocketProvider extends ChangeNotifier {
     }
   }
 
-  
   List<Message> messages = [];
   Future<List<Message>> fetchNotification() async {
     try {
@@ -109,8 +108,28 @@ class WebsocketProvider extends ChangeNotifier {
         throw Exception('Failed to load leave requests');
       }
     } catch (e) {
-      
-      return []; 
+      return [];
+    }
+  }
+
+  String calculateTimeDifference(DateTime createdDate) {
+    final currentDate = DateTime.now();
+    final timeDifference = currentDate.difference(createdDate);
+    final minutesDifference =
+        (timeDifference.inMilliseconds / (1000 * 60)).floor();
+
+    if (minutesDifference < 1) {
+      return "Just now";
+    } else if (minutesDifference == 1) {
+      return "1 minute ago";
+    } else if (minutesDifference < 60) {
+      return "$minutesDifference minutes ago";
+    } else if (minutesDifference < 1440) {
+      final hoursDifference = (minutesDifference / 60).floor();
+      return "$hoursDifference hour${hoursDifference > 1 ? 's' : ''} ago";
+    } else {
+      final daysDifference = (minutesDifference / 1440).floor();
+      return "$daysDifference day${daysDifference > 1 ? 's' : ''} ago";
     }
   }
 }

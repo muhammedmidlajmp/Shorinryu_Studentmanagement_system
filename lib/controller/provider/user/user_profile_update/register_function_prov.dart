@@ -5,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shorinryu/controller/api/get_new_accesskey.dart';
 import 'package:shorinryu/model/core/base_url/base_url.dart';
 
 class RegisterDetailsForm extends ChangeNotifier {
@@ -122,6 +123,9 @@ class RegisterDetailsForm extends ChangeNotifier {
         return false;
       }
     } catch (e) {
+      getNewAccessKey();
+      registerUserForm(image, gender, context);
+
       return false;
     }
   }
