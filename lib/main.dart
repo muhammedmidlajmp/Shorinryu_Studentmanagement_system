@@ -10,6 +10,7 @@ import 'package:shorinryu/controller/provider/admin/web_socket/notification_prov
 import 'package:shorinryu/controller/provider/chat_wbsocket_provider/chat_websocket_privider.dart';
 import 'package:shorinryu/controller/provider/login&logout/login_provider.dart';
 import 'package:shorinryu/controller/provider/login&logout/logout_prov.dart';
+import 'package:shorinryu/controller/provider/otp_provider/otp_provider.dart';
 import 'package:shorinryu/controller/provider/register/register_provider.dart';
 import 'package:shorinryu/controller/provider/user/attandance_get_provider/attandance_get_provider.dart';
 import 'package:shorinryu/controller/provider/user/leave_appplication_provider/leave_apply_provi.dart';
@@ -53,8 +54,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => RevenueProvider()),
         ChangeNotifierProvider(create: (context) => ChatWebsocketProvider()),
         ChangeNotifierProvider(create: (context) => UserFeesUpdationProvider()),
-
-
+        ChangeNotifierProvider(create: (context) => OtpProvider()),
       ],
       child: const MaterialApp(
         debugShowCheckedModeBanner: false,

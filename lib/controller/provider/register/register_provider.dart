@@ -52,13 +52,14 @@ class RegisterProvider extends ChangeNotifier {
         prefs
             .setString('accessKey', jsonDecode(response.body)['access'])
             .toString();
+        final otp = prefs.setString('otp', jsonDecode(response.body)['otp']);
         final userData = jsonDecode(response.body)['user'];
         final userId = jsonDecode(response.body)['user']['id'].toString();
         // final String id = userData['id']; // Extract user ID
         await prefs.setString('userId', userId);
 
         await prefs.setString('user', jsonEncode(userData));
-
+        print(otp);
         notifyListeners();
         return true;
       } else {

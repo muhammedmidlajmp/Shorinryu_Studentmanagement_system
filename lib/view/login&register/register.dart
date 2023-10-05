@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shorinryu/controller/provider/login&logout/otp.dart';
 import 'package:shorinryu/controller/provider/register/register_provider.dart';
 import 'package:shorinryu/view/login&register/login.dart';
 import 'package:shorinryu/view/user/home_user/home.dart';
@@ -158,7 +159,7 @@ class RegisterScreen extends StatelessWidget {
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) =>
-                                              const HomePageUser(),
+                                              const OtpScreen(),
                                         ),
                                         (route) => false,
                                       );

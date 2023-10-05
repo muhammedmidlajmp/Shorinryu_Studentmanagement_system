@@ -43,21 +43,14 @@ class HomePageUser extends StatelessWidget {
                 },
                 icon: const Icon(
                   Icons.account_circle_outlined,
-                  color: Colors.yellowAccent,
+                  color: Color.fromARGB(255, 22, 20, 141),
                 )),
             title: const Text(
               'Home',
-              style: TextStyle(color: Colors.yellowAccent),
+              style: TextStyle(color: Color.fromARGB(255, 22, 20, 141)),
             ),
             // toolbarHeight: 60,
-            flexibleSpace: Container(
-              decoration: BoxDecoration(
-                  gradient: LinearGradient(colors: [
-                Colors.black.withOpacity(0.7300000190734863),
-                Colors.black,
-                Colors.black.withOpacity(0.7300000190734863),
-              ])),
-            ),
+            flexibleSpace: Container(),
           ),
           body: Column(
             children: [

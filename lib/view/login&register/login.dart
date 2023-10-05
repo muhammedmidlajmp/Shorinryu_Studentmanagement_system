@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cool_alert/cool_alert.dart';
 import 'package:shorinryu/controller/provider/login&logout/login_provider.dart';
+import 'package:shorinryu/controller/provider/login&logout/otp.dart';
 import 'package:shorinryu/view/admin/home/admin_home.dart';
 import 'package:shorinryu/view/login&register/register.dart';
 import 'package:shorinryu/view/user/home_user/home.dart';
@@ -60,7 +61,8 @@ class LoginPage extends StatelessWidget {
                                   controller:
                                       loginProModel.loginEmailController,
                                   decoration: InputDecoration(
-                                    contentPadding:const EdgeInsets.only(left: 25),
+                                    contentPadding:
+                                        const EdgeInsets.only(left: 25),
                                     filled: true,
                                     fillColor: Colors.white30,
                                     hintText: 'Email',
@@ -118,7 +120,7 @@ class LoginPage extends StatelessWidget {
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) =>
-                                                const AdminHomeScreen(),
+                                                const OtpScreen(),
                                           ));
                                     },
                                     child: const Text('Forgot Password'),
@@ -135,8 +137,8 @@ class LoginPage extends StatelessWidget {
                                       if (loginProModel.loginKey.currentState!
                                           .validate()) {
                                         // ignore: use_build_context_synchronously
-                                        await loginProModel.loginSubmitForm(
-                                            context);
+                                        await loginProModel
+                                            .loginSubmitForm(context);
 
                                         if (prefs.getBool('isUserLogined') ==
                                             true) {
