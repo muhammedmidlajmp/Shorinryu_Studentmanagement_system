@@ -6,13 +6,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shorinryu/controller/provider/login&logout/otp.dart';
 import 'package:shorinryu/controller/provider/register/register_provider.dart';
 import 'package:shorinryu/view/login&register/login.dart';
-import 'package:shorinryu/view/user/home_user/home.dart';
 import 'package:sizer/sizer.dart';
 // import '../../../api/authenticate/register/register_authenticat.dart';
 
 // ignore: must_be_immutable
 class RegisterScreen extends StatelessWidget {
-  RegisterScreen({super.key});
+  const RegisterScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

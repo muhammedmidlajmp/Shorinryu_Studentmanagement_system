@@ -2,9 +2,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shorinryu/controller/provider/admin/chat_provider/chat_provider.dart';
-import 'package:shorinryu/model/chat_model/chat_model.dart';
 import 'package:shorinryu/model/chat_websocket_model/chat_websocket_model.dart';
-import 'package:shorinryu/model/users_get_model/users_get_model.dart';
+import 'package:shorinryu/model/core/colors.dart';
 import '../../../controller/provider/chat_wbsocket_provider/chat_websocket_privider.dart';
 
 class UserChatScreen extends StatelessWidget {
@@ -15,8 +14,21 @@ class UserChatScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: scaffoldBackgrundColor,
       appBar: AppBar(
-        title: Text('Chat'),
+        leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(
+              Icons.arrow_back_ios_new,
+              color: titleTextColor,
+            )),
+        backgroundColor: scaffoldBackgrundColor,
+        title:const Text(
+          'Chat',
+          style: TextStyle(color: titleTextColor),
+        ),
       ),
       body: Column(
         children: [
@@ -36,13 +48,13 @@ class UserChatScreen extends StatelessWidget {
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       // While waiting for data, you can display a loading indicator.
-                      return Center(child: CircularProgressIndicator());
+                      return const Center(child: CircularProgressIndicator());
                     } else if (snapshot.hasError) {
                       // If there's an error in the stream, you can display an error message.
                       return Text('Error: ${snapshot.error}');
                     } else if (!snapshot.hasData) {
                       // If there's no data or the message list is empty, you can display a placeholder or an empty message.
-                      return Text('No messages yet');
+                      return const Text('No messages yet');
                     } else {
                       final message = snapshot.data!;
                       // Check if the message is sent by the current user (replace 'currentUserId' with the actual user ID)

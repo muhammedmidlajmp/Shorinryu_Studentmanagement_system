@@ -3,7 +3,6 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:shorinryu/controller/provider/admin/revenue_prov/revenue_prov.dart';
 import 'package:shorinryu/controller/provider/admin/revenue_provider/revenue_provider.dart';
-import 'package:shorinryu/model/payment_model/payment_model.dart';
 import 'package:sizer/sizer.dart';
 
 class AdminRevenueScreen extends StatefulWidget {
@@ -14,6 +13,7 @@ class AdminRevenueScreen extends StatefulWidget {
 }
 
 class _AdminRevenueScreenState extends State<AdminRevenueScreen> {
+  // ignore: prefer_typing_uninitialized_variables
   var data;
 
   @override
@@ -75,7 +75,7 @@ class _AdminRevenueScreenState extends State<AdminRevenueScreen> {
                             Align(
                               alignment: Alignment.topCenter,
                               child: Padding(
-                                padding: EdgeInsets.all(30.0),
+                                padding:const EdgeInsets.all(30.0),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
@@ -107,7 +107,7 @@ class _AdminRevenueScreenState extends State<AdminRevenueScreen> {
                                             return Text(
                                               revenueData.totalRevenue
                                                   .toString(),
-                                              style: TextStyle(
+                                              style:const TextStyle(
                                                 color: Colors.yellowAccent,
                                                 fontSize: 30,
                                               ),
@@ -159,8 +159,8 @@ class _AdminRevenueScreenState extends State<AdminRevenueScreen> {
                                       ),
                                     ),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(bottom: 20),
+                                 const Padding(
+                                    padding:  EdgeInsets.only(bottom: 20),
                                     child: Text('To'),
                                   ),
                                   Padding(
@@ -203,7 +203,7 @@ class _AdminRevenueScreenState extends State<AdminRevenueScreen> {
                                             modelRevPro.fromselectedDate,
                                             modelRevPro.toselectedDate);
                                       },
-                                      child: Text('show'))
+                                      child:const Text('show'))
                                 ],
                               ),
                             )

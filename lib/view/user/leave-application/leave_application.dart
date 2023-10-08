@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shorinryu/controller/provider/user/leave_appplication_provider/leave_apply_provi.dart';
 import 'package:shorinryu/controller/provider/user/user_leave_application_get.dart';
+import 'package:shorinryu/model/core/colors.dart';
 import 'package:sizer/sizer.dart';
 
 class LeaveApplicationFormScreen extends StatelessWidget {
@@ -13,13 +14,14 @@ class LeaveApplicationFormScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenHight = MediaQuery.of(context).size.height;
+    // final screenHight = MediaQuery.of(context).size.height;
     final leavegetPro =
         Provider.of<UserLeaveApplycationGet>(context, listen: false);
     return Sizer(
       builder: (context, orientation, deviceType) {
         return Consumer<LeaveApplyProvider>(
           builder: (context, leaveApplyProMod, child) => Scaffold(
+            backgroundColor: scaffoldBackgrundColor,
             appBar: AppBar(
               centerTitle: true,
               leading: IconButton(
@@ -28,115 +30,109 @@ class LeaveApplicationFormScreen extends StatelessWidget {
                   },
                   icon: const Icon(
                     Icons.arrow_back_ios,
-                    color: Colors.yellowAccent,
+                    color: titleTextColor,
                   )),
-              backgroundColor: Colors.black.withOpacity(0.7300000190734863),
+              backgroundColor: scaffoldBackgrundColor,
               title: const Text(
                 'Leave Application',
-                style: TextStyle(color: Colors.yellowAccent),
+                style: TextStyle(color: titleTextColor),
               ),
             ),
-            body: Container(
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: AssetImage(
-                        'asset/img/karate-graduation-blackbelt-martial-arts.jpg')),
-              ),
-              child: ListView(scrollDirection: Axis.vertical, children: [
-                Form(
-                  key: leavFormKey,
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          SizedBox(
-                            width: 47.w,
-                            height: 15.h,
-                            child: Padding(
-                              padding: const EdgeInsets.all(20.0),
-                              child: TextFormField(
-                                controller:
-                                    leaveApplyProMod.startdateInputController,
-                                decoration: InputDecoration(
-                                  hintText: 'yyyy/mm/dd',
-                                  filled: true,
-                                  fillColor:
-                                      const Color.fromARGB(153, 189, 184, 184),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(30),
-                                  ),
+            body: ListView(scrollDirection: Axis.vertical, children: [
+              Form(
+                key: leavFormKey,
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: 47.w,
+                          height: 15.h,
+                          child: Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: TextFormField(
+                              controller:
+                                  leaveApplyProMod.startdateInputController,
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.only(left: 10),
+                                icon: Icon(Icons.date_range_rounded),
+                                filled: true,
+                                fillColor: Colors.white30,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(30),
                                 ),
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Enter Date';
-                                  } else {
-                                    return null;
-                                  }
-                                },
-                                onTap: () async {
-                                  DateTime? pickedDate = await showDatePicker(
-                                    context: context,
-                                    initialDate: DateTime.now(),
-                                    firstDate: DateTime(1950),
-                                    lastDate: DateTime(2101),
-                                  );
-
-                                  leaveApplyProMod
-                                      .leveStartUpdateSelectedDate(pickedDate!);
-                                },
                               ),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Enter Date';
+                                } else {
+                                  return null;
+                                }
+                              },
+                              onTap: () async {
+                                DateTime? pickedDate = await showDatePicker(
+                                  context: context,
+                                  initialDate: DateTime.now(),
+                                  firstDate: DateTime(1950),
+                                  lastDate: DateTime(2101),
+                                );
+
+                                leaveApplyProMod
+                                    .leveStartUpdateSelectedDate(pickedDate!);
+                              },
                             ),
                           ),
-                          const Text('To',
-                              style: TextStyle(color: Colors.yellowAccent)),
-                          SizedBox(
-                            width: 47.w,
-                            height: 15.h,
-                            child: Padding(
-                              padding: const EdgeInsets.all(20.0),
-                              child: TextFormField(
-                                controller:
-                                    leaveApplyProMod.enddateInputController,
-                                decoration: InputDecoration(
-                                    hintText: 'yyyy/mm/dd',
-                                    filled: true,
-                                    fillColor: const Color.fromARGB(
-                                        153, 189, 184, 184),
-                                    border: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(30))),
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Enter Date';
-                                  } else {
-                                    return null;
-                                  }
-                                },
-                                onTap: () async {
-                                  DateTime? pickedDate = await showDatePicker(
-                                    context: context,
-                                    initialDate: DateTime.now(),
-                                    firstDate: DateTime(1950),
-                                    lastDate: DateTime(2101),
-                                  );
+                        ),
+                        const Text('To',
+                            style: TextStyle(color: titleTextColor)),
+                        SizedBox(
+                          width: 47.w,
+                          height: 15.h,
+                          child: Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: TextFormField(
+                              controller:
+                                  leaveApplyProMod.enddateInputController,
+                              decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.only(left: 10),
+                                  icon: const Icon(Icons.date_range_rounded),
+                                  filled: true,
+                                  fillColor: Colors.white30,
+                                  border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(30))),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Enter Date';
+                                } else {
+                                  return null;
+                                }
+                              },
+                              onTap: () async {
+                                DateTime? pickedDate = await showDatePicker(
+                                  context: context,
+                                  initialDate: DateTime.now(),
+                                  firstDate: DateTime(1950),
+                                  lastDate: DateTime(2101),
+                                );
 
-                                  leaveApplyProMod
-                                      .leveEndUpdateSelectedDate(pickedDate!);
-                                },
-                              ),
+                                leaveApplyProMod
+                                    .leveEndUpdateSelectedDate(pickedDate!);
+                              },
                             ),
                           ),
-                        ],
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        ),
+                      ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Card(
+                        shadowColor: Colors.grey,
                         child: Container(
                           height: 400,
                           width: double.infinity,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
-                            color: const Color.fromARGB(153, 189, 184, 184),
+                            color: Colors.white54,
                           ),
                           child: Padding(
                             padding: const EdgeInsets.all(20.0),
@@ -160,54 +156,51 @@ class LeaveApplicationFormScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      SizedBox(
-                        height: screenHight / 8,
-                      ),
-                      ElevatedButton(
-                        style: const ButtonStyle(
-                            backgroundColor:
-                                MaterialStatePropertyAll(Colors.red)),
-                        onPressed: () async {
-                          SharedPreferences pref =
-                              await SharedPreferences.getInstance();
+                    ),
+                    ElevatedButton(
+                      style: const ButtonStyle(
+                          backgroundColor:
+                              MaterialStatePropertyAll(buttenColor)),
+                      onPressed: () async {
+                        SharedPreferences pref =
+                            await SharedPreferences.getInstance();
 
-                          if (leavFormKey.currentState!.validate()) {
+                        if (leavFormKey.currentState!.validate()) {
+                          // ignore: use_build_context_synchronously
+                          await leaveApplyProMod.leaveSubmitForm();
+                          if (pref.getBool('leaveApply') == true) {
                             // ignore: use_build_context_synchronously
-                            await leaveApplyProMod.leaveSubmitForm();
-                            if (pref.getBool('leaveApply') == true) {
-                              // ignore: use_build_context_synchronously
-                              Navigator.pop(context);
-                              // ignore: use_build_context_synchronously
-                              CoolAlert.show(
-                                context: context,
-                                type: CoolAlertType.success,
-                                text: "Application Submitted",
-                              );
-                            } else {
-                              // ignore: use_build_context_synchronously
-                              CoolAlert.show(
-                                context: context,
-                                type: CoolAlertType.error,
-                                text: "Submission Fail",
-                              );
-                            }
-                            await leaveApplyProMod.cleanSubmitData();
-                            leavegetPro.userFetchLeaveRequests();
+                            Navigator.pop(context);
+                            // ignore: use_build_context_synchronously
+                            CoolAlert.show(
+                              context: context,
+                              type: CoolAlertType.success,
+                              text: "Application Submitted",
+                            );
+                          } else {
+                            // ignore: use_build_context_synchronously
+                            CoolAlert.show(
+                              context: context,
+                              type: CoolAlertType.error,
+                              text: "Submission Fail",
+                            );
                           }
-                        },
-                        child: const SizedBox(
-                          width: 100,
-                          height: 50,
-                          child: Center(
-                            child: Text('Submit'),
-                          ),
+                          await leaveApplyProMod.cleanSubmitData();
+                          await leavegetPro.userFetchLeaveRequests();
+                        }
+                      },
+                      child: const SizedBox(
+                        width: 100,
+                        height: 50,
+                        child: Center(
+                          child: Text('Submit'),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ]),
-            ),
+              ),
+            ]),
           ),
         );
       },

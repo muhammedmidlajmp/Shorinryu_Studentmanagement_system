@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:shorinryu/controller/provider/user/payment_provider/payment_provider.dart';
 import 'package:shorinryu/controller/provider/user/user_payment_view/user_payment_provider.dart';
+import 'package:shorinryu/model/core/colors.dart';
 import 'package:sizer/sizer.dart';
 
 class PaymentScreen extends StatefulWidget {
@@ -71,6 +72,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
     return Sizer(
       builder: (context, orientation, deviceType) {
         return Scaffold(
+          backgroundColor: scaffoldBackgrundColor,
           appBar: AppBar(
             centerTitle: true,
             leading: IconButton(
@@ -81,108 +83,101 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 },
                 icon: const Icon(
                   Icons.arrow_back_ios,
-                  color: Colors.yellowAccent,
+                  color: titleTextColor,
                 )),
-            backgroundColor: Colors.black.withOpacity(0.7300000190734863),
+            backgroundColor: scaffoldBackgrundColor,
             title: const Text(
               'Pay Fee',
-              style: TextStyle(color: Colors.yellowAccent),
+              style: TextStyle(color: titleTextColor),
             ),
           ),
-          body: Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                fit: BoxFit.cover,
-                image: AssetImage(
-                    'asset/img/karate-graduation-blackbelt-martial-arts.jpg'),
-              ),
-            ),
-            child: ListView(
-              children: [
-                Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
+          body: ListView(
+            children: [
+              Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Card(
+                      color: containarBackgruoundcolor,
                       child: Container(
                           width: screenWidth / 1,
                           height: 200,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(30),
-                              color: const Color.fromARGB(136, 0, 0, 0)),
-                          child: Lottie.asset(
-                              'asset/lottie/animation_lk7xcas0.json')),
+                              color: containarBackgruoundcolor),
+                          child: Lottie.asset('asset/lottie/payments.json')),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(30.0),
-                      child: Form(
-                        key: paymentformKey,
-                        child: Card(
-                          child: TextFormField(
-                            keyboardType: TextInputType.number,
-                            controller: paymentProvider.paymentTextController,
-                            decoration: const InputDecoration(
-                                icon: Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  child: Icon(
-                                    Icons.payments_sharp,
-                                    color: Colors.grey,
-                                  ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(30.0),
+                    child: Form(
+                      key: paymentformKey,
+                      child: Card(
+                        child: TextFormField(
+                          keyboardType: TextInputType.number,
+                          controller: paymentProvider.paymentTextController,
+                          decoration: const InputDecoration(
+                              icon: Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Icon(
+                                  Icons.payments_sharp,
+                                  color: Colors.grey,
                                 ),
-                                hintText: 'Enter Fees Amount',
-                                border: InputBorder.none),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Enter Amount';
-                              } else {
-                                return null;
-                              }
-                            },
-                          ),
+                              ),
+                              hintText: 'Enter Fees Amount',
+                              border: InputBorder.none),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Enter Amount';
+                            } else {
+                              return null;
+                            }
+                          },
                         ),
                       ),
                     ),
-                    SizedBox(
-                      height: screenHight / 4,
-                    ),
-                    ElevatedButton(
-                        style: const ButtonStyle(
-                            backgroundColor:
-                                MaterialStatePropertyAll(Colors.yellowAccent)),
-                        onPressed: () {
-                          if (paymentformKey.currentState!.validate() ||
-                              paymentProvider
-                                  .paymentTextController.text.isNotEmpty) {
-                            var options = {
-                              'key': 'rzp_test_g408urDfkHx1PE',
-                              'amount': (int.parse(paymentProvider
-                                      .paymentTextController.text) *
-                                  100),
-                              'name': 'Shorinryu',
-                              'description': 'Pay Fees',
-                              'timeout': 300,
-                              'prefill': {
-                                'contact': '9742588812',
-                                'email': 'muhammedmidlaj@gmail.com'
-                              }
-                            };
-                            _razorpay.open(options);
-                            CoolAlert.show(
-                              context: context,
-                              type: CoolAlertType.loading,
-                              text: "Loading...!",
-                              autoCloseDuration: const Duration(
-                                  seconds: 3), // Set the duration here
-                            );
-                          }
-                        },
-                        child: const Text(
-                          '        Pay       ',
-                          style: TextStyle(color: Colors.black),
-                        ))
-                  ],
-                ),
-              ],
-            ),
+                  ),
+                  SizedBox(
+                    height: screenHight / 4,
+                  ),
+                  ElevatedButton(
+                      style: const ButtonStyle(
+                          backgroundColor:
+                              MaterialStatePropertyAll(buttenColor)),
+                      onPressed: () {
+                        if (paymentformKey.currentState!.validate() ||
+                            paymentProvider
+                                .paymentTextController.text.isNotEmpty) {
+                          var options = {
+                            'key': 'rzp_test_g408urDfkHx1PE',
+                            'amount': (int.parse(paymentProvider
+                                    .paymentTextController.text) *
+                                100),
+                            'name': 'Shorinryu',
+                            'description': 'Pay Fees',
+                            'timeout': 300,
+                            'prefill': {
+                              'contact': '9742588812',
+                              'email': 'muhammedmidlaj@gmail.com'
+                            }
+                          };
+                          _razorpay.open(options);
+                          CoolAlert.show(
+                            context: context,
+                            type: CoolAlertType.loading,
+                            text: "Loading...!",
+                            autoCloseDuration: const Duration(
+                                seconds: 3), // Set the duration here
+                          );
+                        }
+                      },
+                      child: const Text(
+                        '        Pay       ',
+                        style: TextStyle(color: Colors.black),
+                      ))
+                ],
+              ),
+            ],
           ),
         );
       },

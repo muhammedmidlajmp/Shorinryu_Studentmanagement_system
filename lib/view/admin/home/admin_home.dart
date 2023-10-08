@@ -8,7 +8,6 @@ import 'package:shorinryu/controller/provider/admin/revenue_provider/revenue_pro
 import 'package:shorinryu/controller/provider/chat_wbsocket_provider/chat_websocket_privider.dart';
 import 'package:shorinryu/view/admin/attendence/attendence_mark.dart';
 import 'package:shorinryu/view/admin/chat/chat_list/chat_list.dart';
-import 'package:shorinryu/view/admin/fee_updation/fee_updation.dart';
 import 'package:shorinryu/view/admin/leave_request/leave_request.dart';
 import 'package:shorinryu/view/admin/revenue/revenue_screen.dart';
 import 'package:shorinryu/view/admin/sent_updations/sent_updations.dart';

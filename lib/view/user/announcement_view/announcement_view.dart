@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shorinryu/controller/provider/admin/web_socket/notification_provider.dart';
+import 'package:shorinryu/model/core/colors.dart';
 import 'package:shorinryu/model/notification_model/notification_get_model.dart';
 import 'package:sizer/sizer.dart';
 
@@ -14,6 +15,7 @@ class AnnouncementViewScreen extends StatelessWidget {
       builder: (context, orientation, deviceType) {
         return Consumer<WebsocketProvider>(
           builder: (context, webSocketProvider, child) => Scaffold(
+            backgroundColor: scaffoldBackgrundColor,
             appBar: AppBar(
               centerTitle: true,
               leading: IconButton(
@@ -22,62 +24,53 @@ class AnnouncementViewScreen extends StatelessWidget {
                   },
                   icon: const Icon(
                     Icons.arrow_back_ios,
-                    color: Colors.yellowAccent,
+                    color: titleTextColor,
                   )),
-              backgroundColor: Colors.black.withOpacity(0.7300000190734863),
+              backgroundColor: scaffoldBackgrundColor,
               title: const Text(
                 'Updations',
-                style: TextStyle(color: Colors.yellowAccent),
+                style: TextStyle(color: titleTextColor),
               ),
             ),
-            body: Container(
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: AssetImage(
-                      'asset/img/karate-graduation-blackbelt-martial-arts.jpg'),
-                ),
-              ),
-              child: FutureBuilder<List<Message>>(
-                future: websocketPro.fetchNotification(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(child: CircularProgressIndicator());
-                  } else if (snapshot.hasError) {
-                    return Text('Error: ${snapshot.error}');
-                  } else {
-                    List announcementList = snapshot.data!;
+            body: FutureBuilder<List<Message>>(
+              future: websocketPro.fetchNotification(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasError) {
+                  return Text('Error: ${snapshot.error}');
+                } else {
+                  List announcementList = snapshot.data!;
 
-                    return ListView.builder(
-                      itemCount: announcementList.length,
-                      itemBuilder: (context, index) {
-                        announcementList = announcementList.reversed.toList();
+                  return ListView.builder(
+                    itemCount: announcementList.length,
+                    itemBuilder: (context, index) {
+                      announcementList = announcementList.reversed.toList();
 
-                        final Message request = announcementList[index];
+                      final Message request = announcementList[index];
 
-                        final date = websocketPro.calculateTimeDifference(
-                            DateTime.parse(request.createdAt));
-                        return Card(
-                          child: ListTile(
-                            leading: Text(date.toString()),
-                            title: Text(request.contentMessage.toString()),
-                            // subtitle: Text(
-                            //     'Start: ${request.start} \n End: ${request.end}'),
-                            trailing: Text(
-                              '',
-                              style: TextStyle(),
-                            ),
-                            onTap: () {
-                              showAnnouncementContent(
-                                  context, request.contentMessage.toString());
-                            },
+                      final date = websocketPro.calculateTimeDifference(
+                          DateTime.parse(request.createdAt));
+                      return Card(
+                        child: ListTile(
+                          leading: Text(date.toString()),
+                          title: Text(request.contentMessage.toString()),
+                          // subtitle: Text(
+                          //     'Start: ${request.start} \n End: ${request.end}'),
+                          trailing: Text(
+                            '',
+                            style: TextStyle(),
                           ),
-                        );
-                      },
-                    );
-                  }
-                },
-              ),
+                          onTap: () {
+                            showAnnouncementContent(
+                                context, request.contentMessage.toString());
+                          },
+                        ),
+                      );
+                    },
+                  );
+                }
+              },
             ),
           ),
         );

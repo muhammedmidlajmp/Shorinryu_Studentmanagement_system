@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shorinryu/controller/api/get_new_accesskey.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shorinryu/controller/provider/admin/web_socket/notification_provider.dart';
 import 'package:shorinryu/controller/provider/chat_wbsocket_provider/chat_websocket_privider.dart';
@@ -21,6 +23,7 @@ class HomePageUser extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    getNewAccessKey();
     final chat = Provider.of<ChatWebsocketProvider>(context, listen: false);
     chat.chatWebInitializer();
     final webPro = Provider.of<WebsocketProvider>(context, listen: false);
@@ -38,7 +41,7 @@ class HomePageUser extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => DrawerWidget(),
+                        builder: (context) => const DrawerWidget(),
                       ));
                 },
                 icon: const Icon(
@@ -62,6 +65,7 @@ class HomePageUser extends StatelessWidget {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(30),
                       color: const Color.fromARGB(255, 188, 209, 225)),
+                  child: Lottie.asset('asset/lottie/hello.json'),
                 ),
               ),
               Expanded(

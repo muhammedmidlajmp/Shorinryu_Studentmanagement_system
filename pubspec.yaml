@@ -94,6 +94,9 @@ flutter:
   - asset/lottie/login_1.json
   - asset/lottie/register.json
   - asset/lottie/otp_lottie.json
+  - asset/lottie/home.json
+  - asset/lottie/payments.json
+  - asset/lottie/hello.json
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

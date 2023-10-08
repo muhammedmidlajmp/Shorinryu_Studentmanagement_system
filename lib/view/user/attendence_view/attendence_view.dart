@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shorinryu/controller/provider/user/attandance_get_provider/attandance_get_provider.dart';
+import 'package:shorinryu/model/core/colors.dart';
 import 'package:sizer/sizer.dart';
 import 'package:intl/intl.dart';
 
@@ -14,6 +15,7 @@ class AttendenceViewScreen extends StatelessWidget {
     return Sizer(
       builder: (context, orientation, deviceType) {
         return Scaffold(
+          backgroundColor: scaffoldBackgrundColor,
           appBar: AppBar(
             centerTitle: true,
             leading: IconButton(
@@ -22,108 +24,98 @@ class AttendenceViewScreen extends StatelessWidget {
                 },
                 icon: const Icon(
                   Icons.arrow_back_ios,
-                  color: Colors.yellowAccent,
+                  color: titleTextColor,
                 )),
-            backgroundColor: Colors.black.withOpacity(0.7300000190734863),
+            backgroundColor: scaffoldBackgrundColor,
             title: const Text(
               'Attendence Details',
-              style: TextStyle(color: Colors.yellowAccent),
+              style: TextStyle(color: titleTextColor),
             ),
           ),
           body: SingleChildScrollView(
-            child: Container(
-              decoration: const BoxDecoration(
-                  image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: AssetImage(
-                          'asset/img/karate-graduation-blackbelt-martial-arts.jpg')),
-                  gradient: LinearGradient(
-                    colors: [Colors.white, Colors.white38, Colors.white],
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                  )),
-              child: Column(children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Container(
-                        height: 20.h,
-                        width: 35.5.w,
-                        decoration: BoxDecoration(
-                          color: const Color.fromARGB(149, 0, 0, 0),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Column(
-                          children: [
-                            const Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Text(
-                                'Precent Days',
-                                style: TextStyle(
-                                    color: Colors.yellowAccent, fontSize: 17),
-                              ),
+            child: Column(children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Container(
+                      height: 20.h,
+                      width: 35.5.w,
+                      decoration: BoxDecoration(
+                        color: containarBackgruoundcolor,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Column(
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Text(
+                              'Precent Days',
+                              style: TextStyle(
+                                  color: titleTextColor, fontSize: 17),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                attandanceProvider.presentCount.toString(),
-                                style: const TextStyle(
-                                    color: Color.fromARGB(255, 1, 255, 9),
-                                    fontSize: 35,
-                                    fontWeight: FontWeight.w800),
-                              ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              attandanceProvider.presentCount.toString(),
+                              style: const TextStyle(
+                                  color: Color.fromARGB(255, 48, 223, 54),
+                                  fontSize: 35,
+                                  fontWeight: FontWeight.w800),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Container(
-                        height: 20.h,
-                        width: 35.5.w,
-                        decoration: BoxDecoration(
-                            color: const Color.fromARGB(149, 0, 0, 0),
-                            borderRadius: BorderRadius.circular(20)),
-                        child: Column(
-                          children: [
-                            const Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Text(
-                                'Absent Days',
-                                style: TextStyle(
-                                    color: Colors.yellowAccent, fontSize: 17),
-                              ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Container(
+                      height: 20.h,
+                      width: 35.5.w,
+                      decoration: BoxDecoration(
+                          color: containarBackgruoundcolor,
+                          borderRadius: BorderRadius.circular(20)),
+                      child: Column(
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Text(
+                              'Absent Days',
+                              style: TextStyle(
+                                  color: titleTextColor, fontSize: 17),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                attandanceProvider.absentCount.toString(),
-                                style: const TextStyle(
-                                    color: Color.fromARGB(255, 255, 17, 0),
-                                    fontSize: 35,
-                                    fontWeight: FontWeight.w800),
-                              ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              attandanceProvider.absentCount.toString(),
+                              style: const TextStyle(
+                                  color: Color.fromARGB(255, 255, 17, 0),
+                                  fontSize: 35,
+                                  fontWeight: FontWeight.w800),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          left: 20, right: 20, bottom: 10),
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(left: 20, right: 20, bottom: 10),
+                    child: Card(
                       child: Container(
                         height: 10.h,
                         width: 35.5.w,
                         decoration: BoxDecoration(
-                          color: const Color.fromARGB(149, 0, 0, 0),
+                          color: Colors.white30,
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: Column(
@@ -131,14 +123,18 @@ class AttendenceViewScreen extends StatelessWidget {
                             const Text(
                               'From Date',
                               style: TextStyle(
-                                  color: Colors.yellowAccent, fontSize: 17),
+                                  color: titleTextColor, fontSize: 17),
                             ),
                             TextFormField(
                               controller:
                                   attandanceProvider.startdateInputController,
-                              decoration:
-                                  InputDecoration(border: InputBorder.none),
-                              style: TextStyle(color: Colors.yellowAccent),
+                              decoration: const InputDecoration(
+                                  border: InputBorder.none,
+                                  icon: Padding(
+                                    padding: EdgeInsets.only(left: 10),
+                                    child: Icon(Icons.date_range_outlined),
+                                  )),
+                              style:const TextStyle(color: Colors.yellowAccent),
                               keyboardType: TextInputType.number,
                               onTap: () async {
                                 DateTime? pickedDate = await showDatePicker(
@@ -156,26 +152,32 @@ class AttendenceViewScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          right: 20, left: 20, bottom: 10),
+                  ),
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(right: 20, left: 20, bottom: 10),
+                    child: Card(
                       child: Container(
                         height: 10.h,
                         width: 35.5.w,
                         decoration: BoxDecoration(
-                            color: const Color.fromARGB(149, 0, 0, 0),
+                            color: Colors.white30,
                             borderRadius: BorderRadius.circular(20)),
                         child: Column(
                           children: [
                             const Text(
                               'To Date',
                               style: TextStyle(
-                                  color: Colors.yellowAccent, fontSize: 17),
+                                  color: titleTextColor, fontSize: 17),
                             ),
                             TextFormField(
                               controller:
                                   attandanceProvider.endDateInputController,
                               decoration: const InputDecoration(
+                                  icon: Padding(
+                                    padding: EdgeInsets.only(left: 10),
+                                    child: Icon(Icons.date_range_outlined),
+                                  ),
                                   border: InputBorder.none),
                               style:
                                   const TextStyle(color: Colors.yellowAccent),
@@ -196,28 +198,29 @@ class AttendenceViewScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                  ],
-                ),
-                ElevatedButton(
-                    style: const ButtonStyle(
-                        backgroundColor: MaterialStatePropertyAll(Colors.red)),
-                    onPressed: () async {
-                      await attandanceProvider.fetchAttendance(
-                          attandanceProvider.startdateInputController.text,
-                          attandanceProvider.endDateInputController.text);
-                    },
-                    child: const Text('Get')),
-                Consumer<AttandanceGetProvider>(
-                    builder: (context, value, child) {
-                  final record = value.attendanceRecords;
+                  ),
+                ],
+              ),
+              ElevatedButton(
+                  style: const ButtonStyle(
+                      backgroundColor: MaterialStatePropertyAll(buttenColor)),
+                  onPressed: () async {
+                    await attandanceProvider.fetchAttendance(
+                        attandanceProvider.startdateInputController.text,
+                        attandanceProvider.endDateInputController.text);
+                  },
+                  child: const Text('Get')),
+              Consumer<AttandanceGetProvider>(builder: (context, value, child) {
+                final record = value.attendanceRecords;
 
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Card(
                     child: Container(
                       width: double.infinity,
                       height: 62.h,
                       decoration: BoxDecoration(
-                        color: const Color.fromARGB(185, 0, 0, 0),
+                        color: Colors.white30,
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: ListView.builder(
@@ -235,7 +238,7 @@ class AttendenceViewScreen extends StatelessWidget {
                               outputDate,
                               style: const TextStyle(
                                 fontSize: 25,
-                                color: Colors.yellowAccent,
+                                color: titleTextColor,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -252,10 +255,10 @@ class AttendenceViewScreen extends StatelessWidget {
                         },
                       ),
                     ),
-                  );
-                }),
-              ]),
-            ),
+                  ),
+                );
+              }),
+            ]),
           ),
         );
       },

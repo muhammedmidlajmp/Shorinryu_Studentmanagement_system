@@ -22,7 +22,8 @@ class AttandanceGetProvider extends ChangeNotifier {
   Future<void> fetchAttendance(String startDate, String endDate) async {
     try {
       // Check if startDate or endDate is null before proceeding
-      if (startDate == null || endDate == null) {
+      // ignore: unnecessary_null_comparison
+      if (startDate == null) {
         throw Exception('Start date or end date is null');
       }
 

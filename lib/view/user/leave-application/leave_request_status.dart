@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:shorinryu/controller/api/get_new_accesskey.dart';
 // import 'package:shorinryu/controller/provider/user/leave_appplication_provider/leave_apply_provi.dart';
 import 'package:shorinryu/controller/provider/user/user_leave_application_get.dart';
+import 'package:shorinryu/model/core/colors.dart';
 import 'package:shorinryu/model/user_leave_request_model/user_leave_request_model.dart';
 import 'package:shorinryu/view/user/leave-application/leave_application.dart';
 import 'package:sizer/sizer.dart';
@@ -16,6 +18,7 @@ class LeaveRequestStatusScreen extends StatelessWidget {
       builder: (context, orientation, deviceType) {
         return Consumer<UserLeaveApplycationGet>(
           builder: (context, userReservationProvider, child) => Scaffold(
+            backgroundColor: scaffoldBackgrundColor,
             appBar: AppBar(
               centerTitle: true,
               leading: IconButton(
@@ -24,78 +27,65 @@ class LeaveRequestStatusScreen extends StatelessWidget {
                   },
                   icon: const Icon(
                     Icons.arrow_back_ios,
-                    color: Colors.yellowAccent,
+                    color: titleTextColor,
                   )),
-              backgroundColor: Colors.black.withOpacity(0.7300000190734863),
+              backgroundColor: scaffoldBackgrundColor,
               title: const Text(
                 'Leave Request Status',
-                style: TextStyle(color: Colors.yellowAccent),
+                style: TextStyle(color: titleTextColor),
               ),
             ),
-            body: Container(
-                decoration: const BoxDecoration(
-                    image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: AssetImage(
-                            'asset/img/karate-graduation-blackbelt-martial-arts.jpg')),
-                    gradient: LinearGradient(
-                      colors: [Colors.white, Colors.white30, Colors.white],
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                    )),
-                child: FutureBuilder<List<UserLeaveRequestModel>>(
-                  future: userReservationProvider.userFetchLeaveRequests(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Center(child: CircularProgressIndicator());
-                    } else if (snapshot.hasError) {
-                      return Text('Error: ${snapshot.error}');
-                    } else {
-                      List<UserLeaveRequestModel> leaveRequests =
-                          snapshot.data!;
+            body: FutureBuilder<List<UserLeaveRequestModel>>(
+              future: userReservationProvider.userFetchLeaveRequests(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasError) {
+                  getNewAccessKey();
 
-                      return ListView.builder(
-                        itemCount: leaveRequests.length,
-                        itemBuilder: (context, index) {
-                          leaveRequests = leaveRequests.reversed.toList();
+                  return Text('Error: ${snapshot.error}');
+                } else {
+                  List<UserLeaveRequestModel> leaveRequests = snapshot.data!;
 
-                          final UserLeaveRequestModel request =
-                              leaveRequests[index];
+                  return ListView.builder(
+                    itemCount: leaveRequests.length,
+                    itemBuilder: (context, index) {
+                      leaveRequests = leaveRequests.reversed.toList();
 
-                          DateFormat outputDateFormat =
-                              DateFormat('dd/MMM/yyyy');
+                      final UserLeaveRequestModel request =
+                          leaveRequests[index];
 
-                          String start = outputDateFormat
-                              .format(DateTime.parse(request.start!));
+                      DateFormat outputDateFormat = DateFormat('dd/MMM/yyyy');
 
-                          String end = outputDateFormat
-                              .format(DateTime.parse(request.end!));
+                      String start = outputDateFormat
+                          .format(DateTime.parse(request.start!));
 
-                          return Card(
-                            child: ListTile(
-                              leading: Text("$start\n$end"),
-                              title: Text(request.reasone.toString()),
-                              // subtitle: Text(
-                              //     'Start: ${request.start} \n End: ${request.end}'),
-                              trailing: Text(
-                                request.isApproved == true
-                                    ? 'Accepted'
-                                    : 'Pending',
-                                style: TextStyle(
-                                    color: request.isApproved == true
-                                        ? const Color.fromARGB(255, 58, 242, 64)
-                                        : Colors.red),
-                              ),
-                              // Customize the ListTile as needed
-                            ),
-                          );
-                        },
+                      String end =
+                          outputDateFormat.format(DateTime.parse(request.end!));
+
+                      return Card(
+                        child: ListTile(
+                          leading: Text("$start\n$end"),
+                          title: Text(request.reasone.toString()),
+                          // subtitle: Text(
+                          //     'Start: ${request.start} \n End: ${request.end}'),
+                          trailing: Text(
+                            request.isApproved == true ? 'Accepted' : 'Pending',
+                            style: TextStyle(
+                                color: request.isApproved == true
+                                    ? const Color.fromARGB(255, 58, 242, 64)
+                                    : Colors.red),
+                          ),
+                          // Customize the ListTile as needed
+                        ),
                       );
-                    }
-                  },
-                )),
+                    },
+                  );
+                }
+              },
+            ),
             floatingActionButton: FloatingActionButton(
-              backgroundColor: Colors.yellowAccent,
+              backgroundColor: Color.fromARGB(255, 132, 156, 175),
               child: const Icon(
                 Icons.add_circle,
                 color: Colors.black,

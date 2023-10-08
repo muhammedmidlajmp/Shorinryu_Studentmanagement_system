@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shorinryu/controller/provider/user/user_profile_update/register_function_prov.dart';
+import 'package:shorinryu/model/core/colors.dart';
 import 'package:shorinryu/view/user/new_applycation/widget/text_form_field.dart';
 import 'package:sizer/sizer.dart';
 
@@ -29,12 +30,12 @@ class NewAdmissionScreen extends StatelessWidget {
                     },
                     icon: const Icon(
                       Icons.arrow_back_ios,
-                      color: Colors.yellowAccent,
+                      color: titleTextColor,
                     )),
-                backgroundColor: Colors.black.withOpacity(0.7300000190734863),
+                backgroundColor: scaffoldBackgrundColor,
                 title: const Text(
                   'Add Details',
-                  style: TextStyle(color: Colors.yellowAccent),
+                  style: TextStyle(color: titleTextColor),
                 ),
               ),
               body: ListView(
@@ -89,7 +90,7 @@ class NewAdmissionScreen extends StatelessWidget {
                           child: ElevatedButton(
                             style: const ButtonStyle(
                                 backgroundColor:
-                                    MaterialStatePropertyAll(Colors.red)),
+                                    MaterialStatePropertyAll(titleTextColor)),
                             onPressed: () async {
                               SharedPreferences prefs =
                                   await SharedPreferences.getInstance();
@@ -123,10 +124,9 @@ class NewAdmissionScreen extends StatelessWidget {
                               // await admissionModelPro.clearFormData();
                             },
                             child: const SizedBox(
-                                width: 150,
+                                width: 100,
                                 height: 35,
-                                child: Center(
-                                    child: Text('        Submit        '))),
+                                child: Center(child: Text('   Submit    '))),
                           ),
                         ),
                       ],
